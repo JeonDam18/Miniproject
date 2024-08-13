@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%> 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -90,17 +89,36 @@
         <div>LOGIN</div>
     </div>
     <div class="login-submit-container">
-        <form action="" class="login-form">
+        <form action="ex_login_result.jsp" class="login-form" name=login>
             <div>
                 <label for="username" class="login-label">아이디</label>
-                <input type="text" id="username" class="login-input">
+                <input type="text" id="username" name="userId" class="login-input">
             </div>
             <div>
                 <label for="password" class="login-label">비밀번호</label>
-                <input type="password" id="password" class="login-input">
+                <input type="password" id="password" name="pwd" class="login-input">
             </div>
-            <button class="login-submit" type="submit">로그인</button>
+            <input class="login-submit" type="button" value="로그인" onclick="fnLogin()">
         </form>
     </div>
 </body>
 </html>
+ <script>
+    function fnLogin() {
+        var form = document.login;
+         var id = form.userId.value;
+        var pwd = form.pwd.value;
+
+        if (id === "") {
+            alert("아이디를 입력하세요");
+            form.userId.focus();
+            return;
+        } else if (pwd === "") {
+            alert("비밀번호를 입력하세요");
+            form.pwd.focus();
+            return;
+        } else {
+            form.submit();
+        }
+    }
+</script>

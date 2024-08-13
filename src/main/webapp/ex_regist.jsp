@@ -57,7 +57,8 @@
             border: none;
             background-color: #f8f8f8;
         }
-        .regist-form button {
+        .regist-form button,
+        .regist-form input[type="button"] {
             padding: 10px 15px;
             border: none;
             background-color: #007bff;
@@ -66,7 +67,8 @@
             cursor: pointer;
             font-size: 16px;
         }
-        .regist-form button:hover {
+        .regist-form button:hover,
+        .regist-form input[type="button"]:hover {
             background-color: #0056b3;
         }
         .regist-form input[type="radio"] {
@@ -103,7 +105,7 @@
             text-align: center;
         }
         .regist-form .form-title {
-            text-align: center;
+            text-align: center; 
             font-size: 24px;
             margin-bottom: 20px;
             font-weight: bold;
@@ -113,29 +115,29 @@
 <body class="regist-body">
     <div class="regist-form">
         <div class="form-title">회원가입(Register)</div>
-        <form action="">
+        <form action="ex_regist_insert.jsp" id="registration-form" name="registform">
             <div>
                 <label for="id">*아이디</label>
-                <input type="text" id="id" placeholder="Please enter your ID :)">
+                <input type="text" id="id" name="id" placeholder="Please enter your ID :)">
             </div>
             <div class="check-button">
-                <button type="button">중복확인</button>
+                <input type="button" onclick="fnDuplicate()" value="중복확인">
             </div>
             <div>
                 <label for="password">*비밀번호</label>
-                <input type="password" id="password" placeholder="Password">
+                <input type="password" id="password" name="pwd" placeholder="Password">
             </div>
             <div>
                 <label for="confirm-password">*비밀번호 확인</label>
-                <input type="password" id="confirm-password" placeholder="Double check your Password">
+                <input type="password" id="confirm-password" name="pwdCheck" placeholder="Double check your Password">
             </div>
             <div>
                 <label for="address">주소(도/Province)</label>
-                <input type="text" id="address" placeholder="Address">
+                <input type="text" id="address" name="address" placeholder="Address">
             </div>
             <div>
-                <label for="nickname">닉네임</label>
-                <input type="text" id="nickname" placeholder="Nickname">
+                <label for="nickname">*닉네임</label>
+                <input type="text" id="nickname" name="nickname" placeholder="Nickname">
             </div>
             <div>
                 <label for="motherLang">*모국어/Mother tongue</label>
@@ -173,21 +175,80 @@
                 <label for="am">오전(AM)</label>
                 <input type="radio" id="pm" name="time" value="pm">
                 <label for="pm">오후(PM)</label>
-                <input type="radio" id="not-sure" name="time" value="all">
+                <input type="radio" id="not-sure" name="time" value="all" checked>
                 <label for="not-sure">미정(Not sure)</label>
             </div>
             <div>
                 <label for="bio">간단한 자기소개(Tell us what you want!)</label>
-                <textarea id="bio" placeholder="자기소개를 입력하세요."></textarea>
+                <textarea id="bio" name="intro" placeholder="자기소개를 입력하세요."></textarea>
             </div>
             <div>
                 <label for="profile">프로필사진/Selfie (이미지파일만 업로드하세요)</label>
                 <input type="file" name="profile" id="profile" accept=".jpg, .jpeg, .png, .gif">
             </div>
             <div class="submit-button">
-                <button type="submit">가입하기</button>
+                <input type="button" value="가입하기" onclick="fnRegist()">
             </div>
-        </form>    
+        </form>
     </div>
 </body>
 </html>
+<script>
+	var check1 = false; // 아이디 중복체크 확인 여부
+	var check2 = false; // 중복 여부
+	
+	function fnDuplicate(){
+		check1 = true;
+		var form = document.registform;
+		if(form.id.value =="" || form.id.value.length < 0){
+			alert("아이디를 먼저 입력해주세요")
+			form.id.focus();
+		}else{
+			window.open("ex_id_duplicate.jsp?userId="+form.id.value, "check","width=300, height=200");
+		}
+	}
+	// 중복체크 리턴 결과
+	function getReturn(val){
+		if(val == "Y"){
+			check2 = true;
+		} else {
+			check2 = false;
+		}
+	}
+	function fnRegist(){
+		var form = document.registform;
+		if(!check2){
+			alert("아이디 중복체크를 하세요");
+			return;
+		}
+		if(form.id.value == ""){
+			alert("아이디를 입력해주세요");
+			form.id.focus();
+			return;
+		}else if(form.pwd.value == "" || form.pwdCheck.value == ""){
+			alert("비밀번호를 입력해주세요")
+			form.pwd.focus();
+			return;
+		}else if(form.pwd.value != form.pwdCheck.value){
+			alert("비밀번호가 일치하지 않습니다.")
+			form.pwd.focus();
+			return;
+		}else if(form.nickname.value == ""){
+			alert("닉네임을 입력해해주세요")
+			form.nickname.focus();
+			return;
+		}else if(form.motherLang.value == "" || form.exchangeLang.value == ""){
+			alert("모국어 또는 교환언어를 선택해주세요")
+			form.motherLang.focus();
+			return;
+		}else if(idCheck=false){
+			alert("아이디 중복체크를 먼저하세요.");
+		}else if(idCheck=true){
+			alert("저장되었습니다.");
+			form.submit();
+		}
+	}
+
+
+ 
+</script>

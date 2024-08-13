@@ -67,11 +67,18 @@
             text-decoration: none;
             background-color: white;
             border: 1px solid #ccc;
-            border-radius: 8px; 
+            border-radius: 8px;
+            transition: background-color 0.3s, color 0.3s; 
         }
         .section-tab:hover {
             background-color: #f0f0f0;
         }
+        /* 활성화된 탭 스타일 */
+		.section-tab.active {
+		    background-color: rgb(255, 200, 200); /* 활성화된 탭 배경색 */
+		    color: rgb(138, 35, 15); /* 활성화된 탭 텍스트 색상 */
+		    border: 1px solid rgb(138, 35, 15); /* 활성화된 탭 테두리 색상 */
+		}
         .header-title {
             position: relative; /* 자식 요소의 절대 위치 기준 */
             margin: 30px 0 30px 400px; /* 수정: 400px -> 200px */
@@ -107,11 +114,23 @@
             </span>
         </div>
         <div class="section-tabs"> 
-            <a class="section-tab" href="#">나를 기다리는 친구들</a>
-            <a class="section-tab" href="#">신청 및 게시판</a>
-            <a class="section-tab" href="#">신청대기목록</a>
-            <a class="section-tab" href="#">F&Q</a>
+            <a id="tab1" class="section-tab" href="ex_main.jsp">나를 기다리는 친구들</a>
+            <a id="tab2" class="section-tab" href="ex_border.jsp">신청 및 게시판</a>
+            <a id="tab3" class="section-tab" href="ex_applyList.jsp">신청대기목록</a>
+            <a id="tab4" class="section-tab" href="ex_f&q.jsp">F&Q</a>
         </div>
     </div>
 </body>
 </html>
+<script>
+	document.addEventListener('DOMContentLoaded', function() {
+	    var currentPage = window.location.href; // 현재 페이지 URL 가져오기
+	    var tabs = document.querySelectorAll('.section-tab');
+	
+	    tabs.forEach(function(tab) {
+	        if (tab.href === currentPage) {
+	            tab.classList.add('active'); // 현재 페이지와 일치하는 탭에 active 클래스 추가
+	        }
+	    });
+	});
+</script>

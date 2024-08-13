@@ -78,8 +78,9 @@
         }
     </style>
 </head>
-<body>
 	<%@ include file="ex_header.jsp"%>
+	<%@include file="ex-db.jsp"%>
+<body>
     <div class="button-container">
         <!-- <img src="images/write-logo.png"> -->
         <button><img src="images/write-logo.png">작성하기</button>
@@ -95,6 +96,9 @@
                     <th>종류</th>
                     <th>날짜</th>
                 </tr>
+                <%
+ 
+				%>
                 <tr>
                     <td>1</td>
                     <td><a href="#">주말에 한국어랑 영어 교환할분</a></td>

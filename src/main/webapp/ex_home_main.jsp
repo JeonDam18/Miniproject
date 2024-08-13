@@ -23,7 +23,6 @@
             margin: 0;
             padding: 0;
             opacity: 1; /* opacity 값 1로 수정 */
-            
         }
 
         .home-main-container {
