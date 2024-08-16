@@ -88,7 +88,18 @@
     </style>
 </head>
 <body>
+<%@include file="ex-db.jsp"%>
 <%@ include file="ex_header.jsp"%>
+	<%
+		ResultSet rs = null;
+		Statement stmt = null;
+		String userId = (String)session.getAttribute("userId");
+	
+		 try{
+		stmt = conn.createStatement();
+		String querytext = "SELECT FQNO,USERID,FQCONTENTS,FQTITLE,TO_CHAR(UDATETIME,'YYYY-MM-DD') AS UDATETIME,FQCATEGORY FROM TBL_EFQ";
+		rs = stmt.executeQuery(querytext);	
+	%>
     <div class="button-container">
         <button><img src="images/write-logo.png">작성하기</button>
     </div>
@@ -101,31 +112,37 @@
                         <th>제목</th>
                         <th>작성자</th>
                         <th>게시글</th>
+                        <th>종류</th>
                         <th>날짜</th>
                     </tr>
+                   <%
+                   	while(rs.next()){
+                   %>
                     <tr>
-                        <td>1</td>
-                        <td><a href="#">"공지사항입니다." 다들 화이팅 </a></td>
-                        <td><a href="#">관리자</a></td>
-                        <td><a href="#">나만힘내면 될듯</a></td>
-                        <td>2024.08.12</td>
+                        <td><%= rs.getString("FQNO")%></td>
+                        <td><a href="#" onclick="fnFqview('<%= rs.getString("FQNO") %>')"><%= rs.getString("FQTITLE") %></a></td>
+                        <td><% 
+                        	if(rs.getString("USERID").equals("admin")){
+                        		out.println("관리자");
+                        	}%>	
+                        </a></td>
+                        <td><%= rs.getString("FQCONTENTS")%></a></td>
+                        <td><%= rs.getString("FQCATEGORY")%></td>
+                        <td><%= rs.getString("UDATETIME")%></td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td><a href="#">자꾸 김정은이 말을걸어요</a></td>
-                        <td><a href="#">관리자</a></td>
-                        <td><a href="#">총맞은것처럼~</a></td>
-                        <td>2024.08.15</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td><a href="#">자꾸 시진핑이 말을걸어요</a></td>
-                        <td><a href="#">관리자</a></td>
-                        <td><a href="#">주한미군만세~</a></td>
-                        <td>2024.08.16</td>
-                    </tr>                               
+                   <%
+                   	}//while문 닫음
+		 		} catch(SQLException ex) {
+				out.println("SQLException : " + ex.getMessage());
+			}
+                   %>                              
             </table>
         </div>
     </div>
 </body>
 </html>
+<script>
+	function fnFqview(fqno){
+		location.href = "ex_f&q_contents.jsp?fqno="+fqno;
+	}
+</script>

@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -111,30 +113,31 @@
     </style>
 </head>
 <body class="border-contents-update-body">
+
     <div class="border-contents-update-container">
         <div class="border-contents-update-title">
-            Title : <input type="text" id="title" placeholder="제목을 입력하세요">
+            <form action="ex-border-insert-result.jsp">
+            Title : <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
         </div>
         <div class="contents-header">
-            <form action="">
             <div>
                 Category :
-                <select id="category-select">
+                <select id="category-select" name="category">
                     <option value="">--Please choose an option--</option>
-                    <option value="exchange">언어교환</option>
-                    <option value="anything">자유게시판</option>
+                    <option value="언어교환">언어교환/exchange</option>
+                    <option value="자유게시판">자유게시판/anything</option>
                 </select>
             </div>
         </div>
         <div class="border-contents-update">
-            <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+            <textarea id="content" name="contents" placeholder="내용을 입력하세요"></textarea>
         </div>
         <div class="border-contents-update-button">
-            <button>입력(enter)</button>
+            <button type="submit">입력(enter)</button>
             <button>취소(Cancel)</button>
             </form>
         </div>
-    </div>
+    	</div>
 
     <script>
         document.getElementById('category-select').addEventListener('change', function() {

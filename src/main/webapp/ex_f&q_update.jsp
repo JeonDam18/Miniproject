@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +21,7 @@
         .border-contents-update-container {
             width: 800px;
             margin: 50px auto;
-            background-color: #007bff;
+            background-color: #972d2d;
             border-radius: 2%;
             padding: 20px;
             box-sizing: border-box;
@@ -111,9 +113,22 @@
     </style>
 </head>
 <body class="border-contents-update-body">
+<%@include file="ex-db.jsp"%>
+<%
+	String fqno = request.getParameter("fqno");
+	String userId = (String)session.getAttribute("userId");
+	ResultSet rs = null;
+	Statement stmt = null;
+	try{
+		stmt = conn.createStatement();
+		String querytext = "SELECT * FROM TBL_EFQ WHERE FQNO="+fqno;
+		rs = stmt.executeQuery(querytext);
+		if (rs.next()) {
+
+%> 
     <div class="border-contents-update-container">
         <div class="border-contents-update-title">
-            Title : <input type="text" id="title" placeholder="제목을 입력하세요">
+            Title : <input type="text" id="title" value="<%= rs.getString("FQTITLE") %>" >
         </div>
         <div class="contents-header">
             <form action="">
@@ -121,13 +136,13 @@
                 Category :
                 <select id="category-select">
                     <option value="">--Please choose an option--</option>
-                    <option value="exchange">언어교환</option>
-                    <option value="anything">자유게시판</option>
+                    <option value="alarm">공지사항</option>
+                    <option value="answer">F&Q</option>
                 </select>
             </div>
         </div>
         <div class="border-contents-update">
-            <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+            <textarea id="content"><%= rs.getString("FQCONTENTS") %></textarea>
         </div>
         <div class="border-contents-update-button">
             <button>수정(Modify)</button>
@@ -135,21 +150,11 @@
             </form>
         </div>
     </div>
-
-    <script>
-        document.getElementById('category-select').addEventListener('change', function() {
-            var category = this.value;
-            var content = '';
-
-            if (category === 'exchange') {
-                content = '언어교환은 원하는 시간을 적어주세요~. Please write down your preferred time.';
-            } else if (category === 'anything') {
-                content = '자유게시판입니다 Do not use bad word.';
-            } else {
-                content = '내용을 입력하세요.';
-            }
-            document.getElementById('content').value = content;
-        });
-    </script>
+	<%  
+		}
+		} catch(SQLException ex) {
+			out.println("SQLException : " + ex.getMessage());
+		}
+	%>
 </body>
 </html>

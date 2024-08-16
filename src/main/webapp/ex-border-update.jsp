@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +21,7 @@
         .border-contents-update-container {
             width: 800px;
             margin: 50px auto;
-            background-color: #972d2d;
+            background-color: #007bff;
             border-radius: 2%;
             padding: 20px;
             box-sizing: border-box;
@@ -111,45 +113,54 @@
     </style>
 </head>
 <body class="border-contents-update-body">
+<%@include file="ex-db.jsp"%>
+	<%
+			String BOARDNO = request.getParameter("BOARDNO");
+			String userId = (String)session.getAttribute("userId");
+			Statement stmt = null;
+			ResultSet rs = null;
+			try{
+				
+					stmt = conn.createStatement();
+					String querytext = "SELECT * FROM TBL_EBOARD WHERE BOARDNO="+BOARDNO;
+					rs=stmt.executeQuery(querytext);
+			
+	%>
+
     <div class="border-contents-update-container">
         <div class="border-contents-update-title">
-            Title : <input type="text" id="title" placeholder="제목을 입력하세요">
+            <form action="ex-border-update-result.jsp" name="borderupdate">
+            <%
+            	if(rs.next()){
+            %>
+            Title : <input type="text" id="title" name="title" value="<%= rs.getString("TITLE") %>">
         </div>
         <div class="contents-header">
-            <form action="">
+                <input type="hidden" name="boardNo" value="<%=BOARDNO %>">
             <div>
                 Category :
-                <select id="category-select">
+                <select id="category-select" name="category">
                     <option value="">--Please choose an option--</option>
-                    <option value="alarm">공지사항</option>
-                    <option value="answer">F&Q</option>
+                    <option value="언어교환">언어교환</option>
+                    <option value="자유게시판">자유게시판</option>
                 </select>
             </div>
         </div>
         <div class="border-contents-update">
-            <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+            <textarea id="content" name="contents"><%= rs.getString("CONTENTS") %></textarea>
         </div>
+        <% }
+        %>
         <div class="border-contents-update-button">
-            <button>수정(Modify)</button>
-            <button>취소(Cancel)</button>
+            <button type="submit">수정(Modify)</button>
+            <button onclick="window.history.back();">취소(Cancel)</button>
             </form>
         </div>
+        <%
+		} catch(SQLException ex) {
+			out.println("SQLException : " + ex.getMessage());
+		}   
+        %>
     </div>
-
-    <script>
-        document.getElementById('category-select').addEventListener('change', function() {
-            var category = this.value;
-            var content = '';
-
-            if (category === 'exchange') {
-                content = '언어교환은 원하는 시간을 적어주세요~. Please write down your preferred time.';
-            } else if (category === 'anything') {
-                content = '자유게시판입니다 Do not use bad word.';
-            } else {
-                content = '내용을 입력하세요.';
-            }
-            document.getElementById('content').value = content;
-        });
-    </script>
 </body>
 </html>

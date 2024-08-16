@@ -1,6 +1,10 @@
 eclipse.preferences.version=1
+encoding//src/main/webapp/ex-border-contents.jsp=UTF-8
+encoding//src/main/webapp/ex-border-insert.jsp=UTF-8
+encoding//src/main/webapp/ex-border-update.jsp=UTF-8
 encoding//src/main/webapp/ex_applyList.jsp=UTF-8
 encoding//src/main/webapp/ex_f&q.jsp=UTF-8
+encoding//src/main/webapp/ex_f&q_update.jsp=UTF-8
 encoding//src/main/webapp/ex_header.jsp=UTF-8
 encoding//src/main/webapp/ex_home_main.jsp=UTF-8
 encoding//src/main/webapp/ex_login.jsp=UTF-8

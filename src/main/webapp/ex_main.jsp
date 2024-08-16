@@ -18,7 +18,7 @@
             src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
             font-weight: normal;
             font-style: normal;
-        }
+        } 
         @font-face {
             font-family: 'SBAggroB';
             src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SBAggroB.woff') format('woff');
@@ -66,7 +66,7 @@
         }
         .user-info div {
             margin-bottom: 10px;
-        }
+        } 
         .user-info span {
             display: inline-block;
             margin-right: 10px;
@@ -114,6 +114,8 @@
 	%>
         <%
         while(rs.next()){
+        	//본인의 프로필을 제외하고 보여줌
+        	if(!rs.getString("USERID").equals(userId)){
         %>
 <body class="main-body">
     <div class="main-container">
@@ -136,13 +138,14 @@
                     <span>나는!</span><span><%= rs.getString("INTRODUCE") %></span>
                 </div>
             </div>
-            <form action="">
-                <input type="button" value="교환신청" onclick="fnApply()">
-            </form>
+                <input type="button" value="교환신청" onclick="fnApply('<%= rs.getString("USERID") %>')">
         </div>
     </div> 
 </body>
-            <%} %>
+            <%}
+            }
+        	
+        	%>
     <%
 	} catch(SQLException ex) {
 		out.println("SQLException : " + ex.getMessage());
@@ -151,8 +154,11 @@
 </html>
 
 <script>
-	 function fnApply(){
-		 alert("공사중 뚝딱뚝딱 똑땅해 어려워");
+	 function fnApply(APPLIEDID){
+		 var confirmed = confirm("정말로 신청하시겠습니까?");
+         if (confirmed) {
+             location.href = "ex-apply-result.jsp?APPLIEDID="+APPLIEDID;
+         }
 	 }
 	 document.addEventListener('DOMContentLoaded', function() {
 	     var currentPage = window.location.href; // 현재 페이지 URL 가져오기

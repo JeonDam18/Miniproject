@@ -49,7 +49,7 @@
             padding: 20px;
         }
         .button-container {
-            position: absolute;
+            position:  ;
             top: 10px;
             right: 10px;
             display: flex;
@@ -78,12 +78,23 @@
         }
     </style>
 </head>
+<body>
 	<%@ include file="ex_header.jsp"%>
 	<%@include file="ex-db.jsp"%>
-<body>
+	<%
+		ResultSet rs = null;
+		Statement stmt = null;
+		String userId = (String)session.getAttribute("userId");
+	
+	try{
+		stmt = conn.createStatement();
+		String querytext = "SELECT B.BOARDNO,B.CONTENTS,B.TITLE,B.CATEGORY1,TO_CHAR(B.UDATETIME,'YYYY-MM-DD') AS UDATETIME,U.NICKNAME FROM TBL_EBOARD B INNER JOIN TBL_EUSER U ON B.USERID = U.USERID";
+		rs = stmt.executeQuery(querytext);
+		out.println(userId);	
+	%>
     <div class="button-container">
         <!-- <img src="images/write-logo.png"> -->
-        <button><img src="images/write-logo.png">작성하기</button>
+        <button onclick="fnInsertboard()"><img src="images/write-logo.png">작성하기</button>
     </div>
     <div class="border-container">
         <div class="table-container">
@@ -96,27 +107,34 @@
                     <th>종류</th>
                     <th>날짜</th>
                 </tr>
-                <%
- 
-				%>
+            <%
+		while (rs.next()) {
+		%>
                 <tr>
-                    <td>1</td>
-                    <td><a href="#">주말에 한국어랑 영어 교환할분</a></td>
-                    <td><a href="#">김정은</a></td>
-                    <td><a href="#">저는 일중이라 현재 평일에는 힘들고 주말에...</a></td>
-                    <td>언어교환</td>
-                    <td>2024.08.12</td>
+                    <td><%= rs.getString("BOARDNO") %></td>
+                    <td><a href="#" onclick="fnView('<%= rs.getString("BOARDNO") %>')"><%= rs.getString("TITLE") %></a></td>
+                    <td><%= rs.getString("NICKNAME") %></td>
+                    <td><%= rs.getString("CONTENTS") %></td>
+                    <td><%= rs.getString("CATEGORY1") %></td>
+                    <td><%= rs.getString("UDATETIME") %></td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td><a href="#">주말에 한국어랑 영어 교환할분</a></td>
-                    <td><a href="#">김정은</a></td>
-                    <td><a href="#">저는 일중이라 현재 평일에는 힘들고 주말에...</a></td>
-                    <td>언어교환</td>
-                    <td>2024.08.15</td>
-                </tr>                               
+			<%
+			}
+		} catch(SQLException ex) {
+				out.println("SQLException : " + ex.getMessage());
+			}
+			%>
+		                             
             </table>
         </div>
     </div>
 </body>
 </html>
+<script>
+	function fnView(BOARDNO){
+		location.href="ex-border-contents.jsp?BOARDNO="+BOARDNO;
+	}
+	function fnInsertboard(){
+		location.href="ex-border-insert.jsp"
+	}
+</script>

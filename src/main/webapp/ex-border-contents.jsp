@@ -1,3 +1,6 @@
+<%@page import="java.awt.Checkbox"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,19 +102,63 @@
     </style>
 </head>
 <body class="border-contents-body">
+<%@include file="ex-db.jsp"%>
+<%
+	String BOARDNO = request.getParameter("BOARDNO");
+	String userId = (String)session.getAttribute("userId");
+	ResultSet rs = null;
+	Statement stmt = null;
+	out.println(userId);
+	try{
+		stmt = conn.createStatement();
+		String querytext = "SELECT U.USERID,B.BOARDNO,B.CONTENTS,B.TITLE,B.CATEGORY1,TO_CHAR(B.UDATETIME,'YYYY-MM-DD') AS UDATETIME,U.NICKNAME"+
+						   " FROM TBL_EBOARD B INNER JOIN TBL_EUSER U ON B.USERID = U.USERID" +
+						   " WHERE BOARDNO="+BOARDNO;
+		rs = stmt.executeQuery(querytext);
+		if (rs.next()) {
+
+%> 
     <div class="border-contents-container">
-        <div class="border-contents-title">여기에 제목 넣어야함</div>
+        <div class="border-contents-title"><%= rs.getString("TITLE") %></div>
         <div class="contents-header">
             <div class="border-contents-selfie"></div>
-            <div class="border-contents-nickname">김바보</div>
-            <div class="border-contents-date">2024.08.15</div>
+            <div class="border-contents-nickname"><%= rs.getString("NICKNAME") %></div>
+            <div class="border-contents-date"><%= rs.getString("UDATETIME") %></div>
         </div>
-        <div class="border-contents">여긴 내용이 들어갈거임 블라블라블라블라블라!!~~~~</div>
+        <div class="border-contents"><%= rs.getString("CONTENTS") %></div>
         <div class="border-contents-button">
-            <button>신청하기</button>
-            <button>수정</button>
-            <button>삭제</button>
+        <%
+			if(rs.getString("USERID").equals(userId) || rs.getString("USERID").equals("admin")){
+		%>
+            <button onclick="fnUpdate_board('<%= BOARDNO %>')">수정</button>
+            <button onclick="fnDelete_board('<%= BOARDNO %>')">삭제</button>
+        <%
+			}else{
+		%>
+            <button onclick="fnApply('<%= rs.getString("USERID") %>')">신청하기</button>
+         <% } %>
         </div>
     </div>
+    <%	}else{
+				out.println("삭제된 게시물입니다.");
+				}
+		 } catch(SQLException ex) {
+			out.println("SQLException : " + ex.getMessage());
+		}
+	%>
 </body>
 </html>
+<script>
+	function fnApply(APPLIEDID){
+		 var confirmed = confirm("정말로 신청하시겠습니까?");
+	    if (confirmed) {
+	        location.href = "ex-apply-result.jsp?APPLIEDID="+APPLIEDID;
+	    }
+	}
+	function fnUpdate_board(BOARDNO){
+		location.href="ex-border-update.jsp?BOARDNO="+BOARDNO;
+	}
+	function fnDelete_board(BOARDNO){
+		location.href="ex-border-delete.jsp?BOARDNO="+BOARDNO;
+	}
+</script>

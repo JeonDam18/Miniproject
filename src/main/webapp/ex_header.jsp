@@ -108,7 +108,7 @@
         <div class="header-title">모두 여기로 문ture!!
             <span class="header-user-control">
                 <img src="images/log-out.png" style="width: 16px; height: 16px;">
-                <a href="#">로그아웃</a>
+                <a href="ex_login.jsp">로그아웃</a>
                 <img src="images/user_info.png" style="width: 16px; height: 16px;">
                 <a href="#">정보수정</a>
             </span>
