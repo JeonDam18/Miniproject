@@ -143,14 +143,14 @@
                 <label for="motherLang">*모국어/Mother tongue</label>
                 <select name="motherLang" id="motherLang">
                     <option value="">--Please choose an option--</option>
-                    <option value="korea">Korean</option>
-                    <option value="english">English</option>
-                    <option value="japan">Japanese</option>
-                    <option value="china">Chinese</option>
-                    <option value="germany">German</option>
-                    <option value="france">French</option>
-                    <option value="brazil">Portuguese</option>
-                    <option value="italy">Italian</option>
+                    <option value="Korean">Korean</option>
+                    <option value="English">English</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="German">German</option>
+                    <option value="French">French</option>
+                    <option value="Portuguese">Portuguese</option>
+                    <option value="Italian">Italian</option>
                     <option value="etc">etc</option>
                 </select>
             </div>
@@ -158,14 +158,14 @@
                 <label for="exchangeLang">교환언어/Exchange language</label>
                 <select name="exchangeLang" id="exchangeLang">
                     <option value="">--Please choose an option--</option>
-                    <option value="korea">Korean</option>
-                    <option value="english">English</option>
-                    <option value="japan">Japanese</option> 
-                    <option value="china">Chinese</option>
-                    <option value="germany">German</option>
-                    <option value="france">French</option>
-                    <option value="brazil">Portuguese</option>
-                    <option value="italy">Italian</option>
+                    <option value="Korean">Korean</option>
+                    <option value="English">English</option>
+                    <option value="Japanese">Japanese</option> 
+                    <option value="Chinese">Chinese</option>
+                    <option value="German">German</option>
+                    <option value="French">French</option>
+                    <option value="Portuguese">Portuguese</option>
+                    <option value="Italian">Italian</option>
                     <option value="etc">etc</option>
                 </select>
             </div>
@@ -203,6 +203,9 @@
 		if(form.id.value =="" || form.id.value.length < 0){
 			alert("아이디를 먼저 입력해주세요")
 			form.id.focus();
+		}else if(form.id.value.length < 6){
+			alert("아이디는 6글자 이상으로 만들어주세요")
+			form.id.focus();
 		}else{
 			window.open("ex_id_duplicate.jsp?userId="+form.id.value, "check","width=300, height=200");
 		}
@@ -223,6 +226,10 @@
 		}
 		if(form.id.value == ""){
 			alert("아이디를 입력해주세요");
+			form.id.focus();
+			return;
+		}else if(form.id.value.length < 6){
+			alert("아이디는 6글자 이상으로 만들어주세요")
 			form.id.focus();
 			return;
 		}else if(form.pwd.value == "" || form.pwdCheck.value == ""){

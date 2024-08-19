@@ -19,9 +19,10 @@
             padding: 0;
         }
         .apply-info-list {
+        	font-size : 14px;
             margin: 10px auto;
             width: 1300px;
-            height: 300px;
+            height: 250px;
             background-color: rgb(132, 179, 240);
             display: flex;
             align-items: center;
@@ -83,7 +84,7 @@
 
         .apply-info-list input[type="button"] {
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 14px;
             color: white;
             background-color: #3e40b1;
             border: none;
@@ -97,6 +98,7 @@
             background-color: #1126e6;
         }
         .applicant-status {
+        	font-size: 14px;
             margin: 20px auto;
             width: 1300px;
             padding: 20px;
@@ -116,7 +118,7 @@
 
         .applicant-status input[type="button"] {
             padding: 10px 20px;
-            font-size: 16px;
+            font-size: 14px;
             color: white;
             background-color: #3e40b1; /* 버튼 색상 동일하게 */
             border: none;
@@ -146,10 +148,10 @@
 		rs = stmt.executeQuery(querytext);
 	%>
 <%@ include file="ex_header.jsp"%>
+    <div>
     	<%
     		while(rs.next()){
     	%>
-    <div>
         <div class="apply-info-list">
             <div class="apply-selfie">
                 <img src="images/profile-ex2.png" class="apply-selfie-image">
@@ -171,9 +173,9 @@
                     <span>나는!</span><span><%= rs.getString("INTRODUCE") %></span>
                 </div>
             </div>
-                <input type="button" value="신청승인" onclick="fnAccept()">
-          <%}%>
+                <input type="button" id="status" value="신청승인" onclick="fnAccept()">
         </div>
+          <%}%>
     </div> 
     	<%
 			String querytext2 = "SELECT a.APPLYUSERID,a.APPLIEDUSERID,u.NICKNAME,u.MOTHERLANG,u.EXCHANGELANG,u.PRETIME,u.INTRODUCE" +
@@ -196,10 +198,13 @@
 	}
           %>
 </body>
+<%@ include file="ex_footer.jsp"%>
 </html>
 <script>
 	function fnAccept(){
 		alert("신청이 승인되었습니다! 관리자를 통해 연락이 갑니다!");
+		var status = document.querySelector("#status");
+		status.value="승인대기";
 	}
 	function fnCancel(applieduserid){
 		var confirmed = confirm("신청을 취소 하시겠습니까?");

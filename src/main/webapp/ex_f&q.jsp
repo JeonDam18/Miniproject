@@ -23,6 +23,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         table {
+        	font-size : 14px;
             width: 100%;
             border-collapse: collapse;
         }
@@ -45,8 +46,8 @@
             padding: 20px;
         }
         .fq-title{
-            width: 200px;
-            height: 50px;
+            width: 400px;
+            height: 30px;
             padding: 10px;
             border-radius: 15px;
             font-size: 20px;
@@ -72,9 +73,10 @@
             background-size: cover;
         }
         .button-container button {
+        	margin-top : 200px;
             width: 120px;
             height: 30px;
-            background-color: #f4f4f4;
+            background-color: #e4e4e4;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -83,7 +85,7 @@
             color: #333;
         }
         .button-container button:hover {
-            background-color: #e4e4e4;
+            background-color: #BDBDBD;
         }
     </style>
 </head>
@@ -95,21 +97,28 @@
 		Statement stmt = null;
 		String userId = (String)session.getAttribute("userId");
 	
+    
 		 try{
 		stmt = conn.createStatement();
 		String querytext = "SELECT FQNO,USERID,FQCONTENTS,FQTITLE,TO_CHAR(UDATETIME,'YYYY-MM-DD') AS UDATETIME,FQCATEGORY FROM TBL_EFQ";
 		rs = stmt.executeQuery(querytext);	
-	%>
-    <div class="button-container">
-        <button><img src="images/write-logo.png">작성하기</button>
-    </div>
+	
+  
+    %>
     <div class="border-container">
         <div class="table-container">
+		<% 
+			if(userId.equals("admin")){   
+	    %>
+	    <div class="button-container">
+	        <button onclick="fnInsert()"><img src="images/write-logo.png">작성하기</button>    
+	    </div>
+	    <%} %>
             <div class="fq-title">F&Q 게시판입니다.</div>
             <table class="fqlist">
                     <tr>
                         <th>No</th>
-                        <th>제목</th>
+                         <th>제목</th>
                         <th>작성자</th>
                         <th>게시글</th>
                         <th>종류</th>
@@ -137,12 +146,16 @@
 			}
                    %>                              
             </table>
-        </div>
+        </div> 
     </div>
 </body>
 </html>
+<%@ include file="ex_footer.jsp"%>
 <script>
 	function fnFqview(fqno){
 		location.href = "ex_f&q_contents.jsp?fqno="+fqno;
+	}
+	function fnInsert(){
+		location.href = "ex_f&q_insert.jsp"; 		
 	}
 </script>

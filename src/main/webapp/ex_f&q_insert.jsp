@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +78,7 @@
             margin-bottom: 20px;
         }
 
-        .fq-contents-update input[type="textarea"] {
+        .fq-contents-update textarea {
             width: 100%;
             height: 100%;
             border: none;
@@ -89,7 +91,7 @@
             justify-content: flex-end;
         }
 
-        button {
+        input[type="button"] {
             padding: 10px 15px;
             font-size: 14px;
             border: none;
@@ -101,13 +103,15 @@
             margin-left: 10px;
         }
 
-        button:hover {
+        input[type="button"]:hover {
             background-color: #d47979;
         }
-        #content{
+
+        #content {
             width: 100%; /* 가로 크기를 부모 요소에 맞추기 */
             height: 150px; /* 세로 크기 지정 */
         }
+
         .button-container img {
             width: 30px;
             height: 20px;
@@ -115,7 +119,8 @@
             margin-right: 5px;
             background-size: cover;
         }
-        .button-container button {
+
+        .button-container input[type="button"] {
             width: 120px;
             height: 30px;
             background-color: #f4f4f4;
@@ -126,35 +131,73 @@
             font-weight: bold;
             color: #333;
         }
-        .button-container button:hover {
+
+        .button-container input[type="button"]:hover {
             background-color: #e4e4e4;
         }
     </style>
 </head>
+<%
+	String userId = (String)session.getAttribute("userId");
+%>
 <body class="fq-insert-body">
     <div class="fq-insert-container">
+    	<form action="ex_f&q_insert_result.jsp" name="forminsert">
         <div class="fq-insert-title">
-            Title : <input type="text" id="title" placeholder="제목을 입력하세요">
+            Title : <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
         </div>
         <div class="fq-header">
-            <form action="">
             <div>
                 Category :
-                <select id="category-select">
+                <select id="category-select" name="category">
                     <option value="">--Please choose an option--</option>
-                    <option value="alarm">공지사항</option>
-                    <option value="answer">F&Q</option>
+                    <option value="공지사항">공지사항</option>
+                    <option value="F&Q">F&Q</option>
                 </select>
             </div>
         </div>
         <div class="fq-contents-update">
-            <textarea id="content" placeholder="내용을 입력하세요"></textarea>
+            <textarea id="content" name="content" placeholder="내용을 입력하세요"></textarea>
         </div>
         <div class="fq-contents-update-button">
-            <button>입력(enter)</button>
-            <button>취소(Cancel)</button>
+            <input type="button" onclick="fnInsert()"value="입력(enter)">
+            <input type="button" onclick="fnCancel()"value="취소(Cancel)">
             </form>
         </div>
     </div>
 </body>
 </html>
+<script>
+	function fnInsert(){
+		var form = document.forminsert;
+		var title = document.querySelector("#title").value;
+		var category = document.querySelector("#category-select").value;
+		var content = document.querySelector("#content").value;
+		if(title == ""){
+			alert("제목을 입력하세요");
+			return;
+		}else if(category == ""){
+			alert("카테고리를 구분하세요");
+			return;
+		}else if(content == ""){
+			alert("내용을 입력하세요");
+			return;
+		}else{
+			form.submit();
+		}
+	}
+	function fnCancel(){
+		if(confirm("작성중이던 글을 취소하시겠습니까?")){
+			window.history.back();			
+		}
+	}
+
+</script>
+
+
+
+
+
+
+
+

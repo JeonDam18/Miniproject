@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +13,8 @@
             font-weight: normal;
             font-style: normal;
         }
-        body {
-            background-color: rgb(150, 213, 250);
+        .regist-body {
+            background-color: rgb(138, 35, 15);
             font-family: 'goorm-sans-code', Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -23,7 +25,7 @@
         }
         .regist-form {
             width: 600px;
-            background-color: rgb(255, 255, 255); 
+            background-color: rgb(255, 255, 255);
             border-radius: 8px;
             border: 1px solid rgb(238, 238, 238);
             padding: 20px;
@@ -55,7 +57,8 @@
             border: none;
             background-color: #f8f8f8;
         }
-        .regist-form button {
+        .regist-form button,
+        .regist-form input[type="button"] {
             padding: 10px 15px;
             border: none;
             background-color: #007bff;
@@ -64,7 +67,8 @@
             cursor: pointer;
             font-size: 16px;
         }
-        .regist-form button:hover {
+        .regist-form button:hover,
+        .regist-form input[type="button"]:hover {
             background-color: #0056b3;
         }
         .regist-form input[type="radio"] {
@@ -101,32 +105,44 @@
             text-align: center;
         }
         .regist-form .form-title {
-            text-align: center;
+            text-align: center; 
             font-size: 24px;
             margin-bottom: 20px;
             font-weight: bold;
         }
     </style>
 </head>
-<body>
+<%@include file="ex-db.jsp"%>
+<%
+	ResultSet rs = null;
+	Statement stmt = null;
+	String userId = (String)session.getAttribute("userId");
+	
+	try{
+	stmt = conn.createStatement();
+	String querytext = "SELECT * FROM TBL_EUSER WHERE USERID='" + userId + "'";
+	rs = stmt.executeQuery(querytext);
+	if(rs.next()){
+%>
+<body class="regist-body">
     <div class="regist-form">
-        <div class="form-title">회원수정(Modify)</div>
-        <form action="">
+        <div class="form-title">정보수정</div>
+        <form action="ex_info_update_result.jsp" id="registration-form" name="updateform">
             <div>
                 <label for="id">*아이디</label>
-                <input type="text" id="id" placeholder="Please enter your ID :)" readonly>
+                <input type="text" id="id" name="id" value="<%=rs.getString("USERID") %>" readonly>
             </div>
-            <div>
+            <div> 
                 <label for="password">*비밀번호</label>
-                <input type="password" id="password" placeholder="Password" readonly>
+                <input type="password" id="password" name="pwd" value="*******" readonly>
             </div>
             <div>
                 <label for="address">주소(도/Province)</label>
-                <input type="text" id="address" placeholder="Address">
+                <input type="text" id="address" name="address" placeholder="Address">
             </div>
             <div>
-                <label for="nickname">닉네임</label>
-                <input type="text" id="nickname" placeholder="Nickname">
+                <label for="nickname">*닉네임</label>
+                <input type="text" id="nickname" name="nickname" placeholder="Nickname">
             </div>
             <div>
                 <label for="motherLang">*모국어/Mother tongue</label>
@@ -164,21 +180,44 @@
                 <label for="am">오전(AM)</label>
                 <input type="radio" id="pm" name="time" value="pm">
                 <label for="pm">오후(PM)</label>
-                <input type="radio" id="not-sure" name="time" value="all">
+                <input type="radio" id="not-sure" name="time" value="all" checked>
                 <label for="not-sure">미정(Not sure)</label>
             </div>
             <div>
                 <label for="bio">간단한 자기소개(Tell us what you want!)</label>
-                <textarea id="bio" placeholder="자기소개를 입력하세요."></textarea>
+                <textarea id="bio" name="intro" placeholder="자기소개를 입력하세요."></textarea>
             </div>
             <div>
                 <label for="profile">프로필사진/Selfie (이미지파일만 업로드하세요)</label>
                 <input type="file" name="profile" id="profile" accept=".jpg, .jpeg, .png, .gif">
             </div>
             <div class="submit-button">
-                <button type="submit">수정하기</button>
+                <input type="button" value="수정하기" onclick="fnUpdate()">
             </div>
-        </form>    
+        </form>
+            <%
+            }
+			} catch(SQLException ex) {
+				out.println("SQLException : " + ex.getMessage());
+			}
+			%>
     </div>
 </body>
 </html>
+<script>
+	function fnUpdate(){
+			var form = document.updateform;
+	
+			if(form.nickname.value == ""){
+				alert("닉네임을 입력해해주세요")
+				form.nickname.focus();
+				return;
+			}else if(form.motherLang.value == "" || form.exchangeLang.value == ""){
+				alert("모국어 또는 교환언어를 선택해주세요")
+				form.motherLang.focus();
+				return;
+			}else
+				form.submit();
+			}
+	
+</script>

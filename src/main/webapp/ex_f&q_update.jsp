@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,7 +77,7 @@
             margin-bottom: 20px;
         }
 
-        .border-contents-update input[type="textarea"] {
+        .border-contents-update textarea {
             width: 100%;
             height: 100%;
             border: none;
@@ -91,7 +90,7 @@
             justify-content: flex-end;
         }
 
-        button {
+        input[type="button"] {
             padding: 10px 15px;
             font-size: 14px;
             border: none;
@@ -103,58 +102,81 @@
             margin-left: 10px;
         }
 
-        button:hover {
+        input[type="button"]:hover {
             background-color: #e4ce6c;
-        }
-        #content{
-            width: 100%; /* 가로 크기를 부모 요소에 맞추기 */
-            height: 150px; /* 세로 크기 지정 */
         }
     </style>
 </head>
 <body class="border-contents-update-body">
-<%@include file="ex-db.jsp"%>
+<%@ include file="ex-db.jsp" %>
 <%
-	String fqno = request.getParameter("fqno");
-	String userId = (String)session.getAttribute("userId");
-	ResultSet rs = null;
-	Statement stmt = null;
-	try{
-		stmt = conn.createStatement();
-		String querytext = "SELECT * FROM TBL_EFQ WHERE FQNO="+fqno;
-		rs = stmt.executeQuery(querytext);
-		if (rs.next()) {
-
-%> 
+    String fqno = request.getParameter("fqno");
+    String userId = (String) session.getAttribute("userId");
+    ResultSet rs = null;
+    Statement stmt = null;
+    try {
+        stmt = conn.createStatement();
+        String querytext = "SELECT * FROM TBL_EFQ WHERE FQNO=" + fqno;
+        rs = stmt.executeQuery(querytext);
+        if (rs.next()) {
+%>
     <div class="border-contents-update-container">
+         <form action="ex_f&q_update_result.jsp" name="fqupdate">
         <div class="border-contents-update-title">
-            Title : <input type="text" id="title" value="<%= rs.getString("FQTITLE") %>" >
+            제목 : <input type="text" id="title" name="title" value="<%= rs.getString("FQTITLE") %>">
+            <input type="hidden" id="fqno" name="fqno" value="<%= fqno %>">
         </div>
         <div class="contents-header">
-            <form action="">
             <div>
-                Category :
-                <select id="category-select">
-                    <option value="">--Please choose an option--</option>
-                    <option value="alarm">공지사항</option>
-                    <option value="answer">F&Q</option>
+                카테고리 :
+                <select id="category-select" name="category">
+                    <option value="">--옵션을 선택하세요--</option>
+                    <option value="공지사항" <%= "alarm".equals(rs.getString("FQCATEGORY")) ? "selected" : "" %>>공지사항</option>
+                    <option value="F&Q" <%= "answer".equals(rs.getString("FQCATEGORY")) ? "selected" : "" %>>F&Q</option>
                 </select>
             </div>
         </div>
         <div class="border-contents-update">
-            <textarea id="content"><%= rs.getString("FQCONTENTS") %></textarea>
+            <textarea id="content" name="content"><%= rs.getString("FQCONTENTS") %></textarea>
         </div>
         <div class="border-contents-update-button">
-            <button>수정(Modify)</button>
-            <button>취소(Cancel)</button>
+            <input type="button" onclick="fnUpdate()" value="수정(Modify)">
+            <input type="button" onclick="fnCancel()" value="취소(Cancel)">
             </form>
         </div>
     </div>
-	<%  
+<%
+        }
+    } catch (SQLException ex) {
+        out.println("SQLException : " + ex.getMessage());
+    }
+%>
+<script>
+    function fnUpdate() {
+    	var form = document.fqupdate;
+		var title = document.querySelector("#title").value;
+		var category = document.querySelector("#category-select").value;
+		var content = document.querySelector("#content").value;
+		var fqno = document.querySelector("#fqno").value;
+		if(title == ""){
+			alert("제목을 입력하세요");
+			return;
+		}else if(category == ""){
+			alert("카테고리를 구분하세요");
+			return;
+		}else if(content == ""){
+			alert("내용을 입력하세요");
+			return;
+		}else{
+			form.submit();
+		} 
+    }
+
+    function fnCancel() {
+    	if(confirm("수정중이던 글을 취소하시겠습니까?")){
+			window.history.back();			
 		}
-		} catch(SQLException ex) {
-			out.println("SQLException : " + ex.getMessage());
-		}
-	%>
+    }
+</script>
 </body>
 </html>

@@ -108,7 +108,7 @@
 	String userId = (String)session.getAttribute("userId");
 	ResultSet rs = null;
 	Statement stmt = null;
-	out.println(userId);
+
 	try{
 		stmt = conn.createStatement();
 		String querytext = "SELECT * FROM TBL_EFQ WHERE FQNO="+fqno;
@@ -149,6 +149,8 @@
 		location.href="ex_f&q_update.jsp?fqno="+fqno;
 	}
 	function fnDelete_board(fqno){
-		location.href="ex-f&q-delete.jsp?fqno="+fqno;
+		if(confirm("삭제하시겠습니까?")){
+			location.href="ex_f&q_delete.jsp?fqno="+fqno;		
+		}
 	}
 </script>

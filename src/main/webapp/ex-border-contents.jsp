@@ -108,7 +108,6 @@
 	String userId = (String)session.getAttribute("userId");
 	ResultSet rs = null;
 	Statement stmt = null;
-	out.println(userId);
 	try{
 		stmt = conn.createStatement();
 		String querytext = "SELECT U.USERID,B.BOARDNO,B.CONTENTS,B.TITLE,B.CATEGORY1,TO_CHAR(B.UDATETIME,'YYYY-MM-DD') AS UDATETIME,U.NICKNAME"+
@@ -128,15 +127,21 @@
         <div class="border-contents"><%= rs.getString("CONTENTS") %></div>
         <div class="border-contents-button">
         <%
+        System.out.println("USERID from DB:  ==> '" + rs.getString("USERID") + "'");
 			if(rs.getString("USERID").equals(userId) || rs.getString("USERID").equals("admin")){
+				System.out.println("USERID from DB:  ==> '" + rs.getString("USERID") + "'");
 		%>
+			<div>test</div>
             <button onclick="fnUpdate_board('<%= BOARDNO %>')">수정</button>
             <button onclick="fnDelete_board('<%= BOARDNO %>')">삭제</button>
         <%
 			}else{
+				if(rs.getString("CATEGORY1").equals("언어교환")){
 		%>
             <button onclick="fnApply('<%= rs.getString("USERID") %>')">신청하기</button>
-         <% } %>
+         <%
+				}
+         } %>
         </div>
     </div>
     <%	}else{
@@ -156,9 +161,15 @@
 	    }
 	}
 	function fnUpdate_board(BOARDNO){
+		
 		location.href="ex-border-update.jsp?BOARDNO="+BOARDNO;
 	}
 	function fnDelete_board(BOARDNO){
-		location.href="ex-border-delete.jsp?BOARDNO="+BOARDNO;
+		var confirmed = confirm("삭제하시겠습니까?");
+		if(confirm == true){
+			location.href="ex-border-delete.jsp?BOARDNO="+BOARDNO;			
+		}else{
+			return;
+		}
 	}
 </script>

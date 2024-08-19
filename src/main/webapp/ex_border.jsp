@@ -1,4 +1,4 @@
-<%@page import="java.awt.Checkbox"%>
+ <%@page import="java.awt.Checkbox"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -11,21 +11,22 @@
     <title>게시판</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            /* font-family: Arial, sans-serif; */
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
         .border-container {
-            margin: 20px auto;
-            width: 90%;
-            max-width: 1200px;
-            background-color: #fff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative; /* Positioning context for the button container */
-        }
+        	font-size : 14px;
+		    margin: 20px auto;
+		    width: 90%;
+		    max-width: 1200px;
+		    background-color: #fff;
+		    border-radius: 8px;
+		    overflow: hidden;
+		    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		    position: relative; /* 테이블의 위치 기준 */
+		}
         table {
             width: 100%;
             border-collapse: collapse;
@@ -49,7 +50,6 @@
             padding: 20px;
         }
         .button-container {
-            position:  ;
             top: 10px;
             right: 10px;
             display: flex;
@@ -63,9 +63,11 @@
             background-size: cover;
         }
         .button-container button {
+        	margin-top : 10px;
+        	margin-left : 93%;
             width: 120px;
             height: 30px;
-            background-color: #f4f4f4;
+            background-color: #e4e4e4;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -74,7 +76,7 @@
             color: #333;
         }
         .button-container button:hover {
-            background-color: #e4e4e4;
+            background-color: #BDBDBD;
         }
     </style>
 </head>
@@ -90,7 +92,6 @@
 		stmt = conn.createStatement();
 		String querytext = "SELECT B.BOARDNO,B.CONTENTS,B.TITLE,B.CATEGORY1,TO_CHAR(B.UDATETIME,'YYYY-MM-DD') AS UDATETIME,U.NICKNAME FROM TBL_EBOARD B INNER JOIN TBL_EUSER U ON B.USERID = U.USERID";
 		rs = stmt.executeQuery(querytext);
-		out.println(userId);	
 	%>
     <div class="button-container">
         <!-- <img src="images/write-logo.png"> -->
@@ -104,7 +105,7 @@
                     <th>제목</th>
                     <th>작성자</th>
                     <th>게시글</th>
-                    <th>종류</th>
+                    <th style="width : 80px">종류</th>
                     <th>날짜</th>
                 </tr>
             <%
@@ -129,6 +130,7 @@
         </div>
     </div>
 </body>
+<%@ include file="ex_footer.jsp"%>
 </html>
 <script>
 	function fnView(BOARDNO){

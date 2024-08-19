@@ -20,7 +20,7 @@
             font-style: normal;
         }
         body {
-            margin: 10px;
+            margin: 0;
             padding: 0;
             position: relative;
             font-family: 'GmarketSansMedium', Arial, sans-serif;
@@ -35,6 +35,7 @@
             overflow: hidden;
         }
         .logo {
+        	cursor : pointer;
             width: 200px;
             height: 200px;
             float: left;
@@ -44,6 +45,7 @@
             background-repeat: no-repeat;
         }
         .section-tabs {
+        	font-size : 14px;
             position: absolute;
             bottom: 0;
             left: 200px;
@@ -104,13 +106,13 @@
 </head>
 <body>
     <div class="header-container">
-        <div class="logo"></div> <!--클릭시 홈으로-->
+        <div class="logo" onclick="fnGomain()"></div> <!--클릭시 홈으로-->
         <div class="header-title">모두 여기로 문ture!!
             <span class="header-user-control">
                 <img src="images/log-out.png" style="width: 16px; height: 16px;">
                 <a href="ex_login.jsp">로그아웃</a>
                 <img src="images/user_info.png" style="width: 16px; height: 16px;">
-                <a href="#">정보수정</a>
+                <a href="ex_info_update.jsp">정보수정</a>
             </span>
         </div>
         <div class="section-tabs"> 
@@ -133,4 +135,7 @@
 	        }
 	    });
 	});
+	function fnGomain(){
+		location.href="ex_main.jsp"
+	}
 </script>
