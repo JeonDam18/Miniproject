@@ -111,7 +111,7 @@
 
 	try{
 		stmt = conn.createStatement();
-		String querytext = "SELECT * FROM TBL_EFQ WHERE FQNO="+fqno;
+		String querytext = "SELECT * FROM TBL_EFQ EF INNER JOIN TBL_EUSER EU ON EF.USERID = EU.USERID WHERE FQNO="+fqno;
 		rs = stmt.executeQuery(querytext);
 		if (rs.next()) {
 
@@ -119,7 +119,7 @@
     <div class="border-contents-container">
         <div class="border-contents-title"><%= rs.getString("FQTITLE") %></div>
         <div class="contents-header">
-            <div class="border-contents-selfie"></div>
+            <div class="border-contents-selfie" style="background-image: url('<%= rs.getString("SELFIE") %>');"></div>
             <div class="border-contents-nickname">관리자</div>
             <div class="border-contents-date"><%= rs.getString("UDATETIME") %></div>
         </div>

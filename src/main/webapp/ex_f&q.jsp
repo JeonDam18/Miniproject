@@ -118,10 +118,10 @@
             <table class="fqlist">
                     <tr>
                         <th>No</th>
-                         <th>제목</th>
-                        <th>작성자</th>
+                        <th>제목</th>
+                        <th style="width : 80px">작성자</th>
                         <th>게시글</th>
-                        <th>종류</th>
+                        <th style="width : 80px">종류</th>
                         <th>날짜</th>
                     </tr>
                    <%

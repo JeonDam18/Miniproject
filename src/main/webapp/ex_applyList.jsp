@@ -141,7 +141,7 @@
 
 	try{
 		stmt = conn.createStatement();
-		String querytext = "SELECT a.APPLYUSERID,a.APPLIEDUSERID,u.NICKNAME,u.MOTHERLANG,u.EXCHANGELANG,u.PRETIME,u.INTRODUCE"+
+		String querytext = "SELECT a.APPLYUSERID,a.APPLIEDUSERID,u.NICKNAME,u.MOTHERLANG,u.EXCHANGELANG,u.PRETIME,u.INTRODUCE,u.SELFIE"+
 				" FROM TBL_APPLY a"+
 				" JOIN TBL_EUSER u ON a.APPLYUSERID = u.USERID"+
 				" WHERE a.APPLIEDUSERID ='" + userId + "'";
@@ -153,9 +153,16 @@
     		while(rs.next()){
     	%>
         <div class="apply-info-list">
-            <div class="apply-selfie">
-                <img src="images/profile-ex2.png" class="apply-selfie-image">
-            </div>
+           <%
+           		if(rs.getString("SELFIE") != null){
+           %>
+            <div class="apply-selfie" style="background-image: url('<%= rs.getString("SELFIE") %>');"></div>
+           <% 
+           		}else{
+           %>
+           			<div class="user-selfie" style="background-image: url('images/profile-ex2.png');"></div>
+           <% 	}
+           %>
             <div class="apply-info">
                 <div>
                     <span>닉네임:</span><span><%= rs.getString("NICKNAME") %></span>
@@ -187,7 +194,7 @@
     		while(rs.next()){
     	%>
     				<div class="applicant-status">
-    	            <span>신청한사람: <%= rs.getString("APPLIEDUSERID") %></span>
+    	            <span><%= rs.getString("NICKNAME") %> 님께 신청하셨습니다</span>
     	            <span>상태: 승인대기</span>
     	            <input type="button" onclick="fnCancel('<%= rs.getString("APPLIEDUSERID") %>')" value="신청취소">
     	        	</div>

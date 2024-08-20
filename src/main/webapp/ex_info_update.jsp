@@ -127,7 +127,7 @@
 <body class="regist-body">
     <div class="regist-form">
         <div class="form-title">정보수정</div>
-        <form action="ex_info_update_result.jsp" id="registration-form" name="updateform">
+        <form action="ex_info_update_result.jsp" id="registration-form" name="updateform" method="post" enctype="multipart/form-data">   
             <div>
                 <label for="id">*아이디</label>
                 <input type="text" id="id" name="id" value="<%=rs.getString("USERID") %>" readonly>
@@ -138,24 +138,24 @@
             </div>
             <div>
                 <label for="address">주소(도/Province)</label>
-                <input type="text" id="address" name="address" placeholder="Address">
+                <input type="text" id="address" name="address" value="<%=rs.getString("USEADDR") %>">
             </div>
             <div>
                 <label for="nickname">*닉네임</label>
-                <input type="text" id="nickname" name="nickname" placeholder="Nickname">
+                <input type="text" id="nickname" name="nickname" value="<%=rs.getString("NICKNAME") %>">
             </div>
             <div>
                 <label for="motherLang">*모국어/Mother tongue</label>
                 <select name="motherLang" id="motherLang">
                     <option value="">--Please choose an option--</option>
-                    <option value="korea">Korean</option>
-                    <option value="english">English</option>
-                    <option value="japan">Japanese</option>
-                    <option value="china">Chinese</option>
-                    <option value="germany">German</option>
-                    <option value="france">French</option>
-                    <option value="brazil">Portuguese</option>
-                    <option value="italy">Italian</option>
+                    <option value="Korean">Korean</option>
+                    <option value="English">English</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="Chinese">Chinese</option>
+                    <option value="German">German</option>
+                    <option value="French">French</option>
+                    <option value="Portuguese">Portuguese</option>
+                    <option value="Italian">Italian</option>
                     <option value="etc">etc</option>
                 </select>
             </div>
@@ -163,14 +163,14 @@
                 <label for="exchangeLang">교환언어/Exchange language</label>
                 <select name="exchangeLang" id="exchangeLang">
                     <option value="">--Please choose an option--</option>
-                    <option value="korea">Korean</option>
-                    <option value="english">English</option>
-                    <option value="japan">Japanese</option> 
-                    <option value="china">Chinese</option>
-                    <option value="germany">German</option>
-                    <option value="france">French</option>
-                    <option value="brazil">Portuguese</option>
-                    <option value="italy">Italian</option>
+                    <option value="Korean">Korean</option>
+                    <option value="English">English</option>
+                    <option value="Japanese">Japanese</option> 
+                    <option value="Chinese">Chinese</option>
+                    <option value="German">German</option>
+                    <option value="French">French</option>
+                    <option value="Portuguese">Portuguese</option>
+                    <option value="Italian">Italian</option>
                     <option value="etc">etc</option>
                 </select>
             </div>
@@ -185,7 +185,7 @@
             </div>
             <div>
                 <label for="bio">간단한 자기소개(Tell us what you want!)</label>
-                <textarea id="bio" name="intro" placeholder="자기소개를 입력하세요."></textarea>
+                <textarea id="bio" name="intro" ><%=rs.getString("INTRODUCE") %></textarea>
             </div>
             <div>
                 <label for="profile">프로필사진/Selfie (이미지파일만 업로드하세요)</label>

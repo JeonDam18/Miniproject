@@ -115,7 +115,7 @@
 <body class="regist-body">
     <div class="regist-form">
         <div class="form-title">회원가입(Register)</div>
-        <form action="ex_regist_insert.jsp" id="registration-form" name="registform">
+        <form action="ex_regist_insert.jsp" id="registration-form" name="registform" method="post" enctype="multipart/form-data">
             <div>
                 <label for="id">*아이디</label>
                 <input type="text" id="id" name="id" placeholder="Please enter your ID :)">

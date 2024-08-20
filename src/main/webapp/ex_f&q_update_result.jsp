@@ -8,6 +8,7 @@
 </head>
 <body>
 <%@include file="ex-db.jsp"%>
+
 	<%
 		String title = request.getParameter("title");
 		String fqno = request.getParameter("fqno");

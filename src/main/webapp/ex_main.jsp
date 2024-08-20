@@ -189,7 +189,19 @@
 <body class="main-body">
     <div class="main-container">
         <div class="user-info-list">
-            <div class="user-selfie"></div>
+        <%
+        	if(rs.getString("SELFIE") != null){	
+        %>
+        <div class="user-selfie" style="background-image: url('<%= rs.getString("SELFIE") %>');"></div>
+        <%
+        	}else{
+        	%>
+        	<div class="user-selfie" style="background-image: url('images/profile-ex2.png');"></div>
+        	<%
+        	}
+        
+        %>    
+            <!-- <div class="user-selfie"></div> -->
             <div class="user-info">
                 <div>
                     <span>닉네임:</span><span><%= rs.getString("NICKNAME") %></span>

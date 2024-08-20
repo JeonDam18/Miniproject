@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<% request.setCharacterEncoding("UTF-8");%>
 	<%@include file="ex-db.jsp"%>
 	<%
 		String title = request.getParameter("title");

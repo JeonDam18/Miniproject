@@ -51,7 +51,6 @@
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            background-image: url('images/selfie2.jpg');
             background-size: cover;
             background-position: center;
             margin-right: 15px;
@@ -110,7 +109,7 @@
 	Statement stmt = null;
 	try{
 		stmt = conn.createStatement();
-		String querytext = "SELECT U.USERID,B.BOARDNO,B.CONTENTS,B.TITLE,B.CATEGORY1,TO_CHAR(B.UDATETIME,'YYYY-MM-DD') AS UDATETIME,U.NICKNAME"+
+		String querytext = "SELECT U.USERID,U.SELFIE,B.BOARDNO,B.CONTENTS,B.TITLE,B.CATEGORY1,TO_CHAR(B.UDATETIME,'YYYY-MM-DD') AS UDATETIME,U.NICKNAME"+
 						   " FROM TBL_EBOARD B INNER JOIN TBL_EUSER U ON B.USERID = U.USERID" +
 						   " WHERE BOARDNO="+BOARDNO;
 		rs = stmt.executeQuery(querytext);
@@ -120,18 +119,16 @@
     <div class="border-contents-container">
         <div class="border-contents-title"><%= rs.getString("TITLE") %></div>
         <div class="contents-header">
-            <div class="border-contents-selfie"></div>
+            <div class="border-contents-selfie" style="background-image: url('<%= rs.getString("SELFIE") %>');"></div>
             <div class="border-contents-nickname"><%= rs.getString("NICKNAME") %></div>
             <div class="border-contents-date"><%= rs.getString("UDATETIME") %></div>
         </div>
         <div class="border-contents"><%= rs.getString("CONTENTS") %></div>
         <div class="border-contents-button">
         <%
-        System.out.println("USERID from DB:  ==> '" + rs.getString("USERID") + "'");
-			if(rs.getString("USERID").equals(userId) || rs.getString("USERID").equals("admin")){
-				System.out.println("USERID from DB:  ==> '" + rs.getString("USERID") + "'");
+   
+			if(rs.getString("USERID").equals(userId) || userId.equals("admin")){
 		%>
-			<div>test</div>
             <button onclick="fnUpdate_board('<%= BOARDNO %>')">수정</button>
             <button onclick="fnDelete_board('<%= BOARDNO %>')">삭제</button>
         <%
@@ -140,7 +137,7 @@
 		%>
             <button onclick="fnApply('<%= rs.getString("USERID") %>')">신청하기</button>
          <%
-				}
+				} 
          } %>
         </div>
     </div>
@@ -166,10 +163,11 @@
 	}
 	function fnDelete_board(BOARDNO){
 		var confirmed = confirm("삭제하시겠습니까?");
-		if(confirm == true){
+		if(confirmed){
 			location.href="ex-border-delete.jsp?BOARDNO="+BOARDNO;			
 		}else{
 			return;
 		}
+						
 	}
 </script>
