@@ -244,6 +244,10 @@
 			alert("닉네임을 입력해해주세요")
 			form.nickname.focus();
 			return;
+		}else if(form.nickname.value.length > 6){
+			alert("닉네임은 5글자 이내로 해주세요.")
+			form.nickname.focus();
+			return;
 		}else if(form.motherLang.value == "" || form.exchangeLang.value == ""){
 			alert("모국어 또는 교환언어를 선택해주세요")
 			form.motherLang.focus();
