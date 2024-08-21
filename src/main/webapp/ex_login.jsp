@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
+<%@page import="java.awt.Checkbox"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%> 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -69,6 +71,11 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        .login-button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
         .login-submit {
             padding: 10px 20px;
             font-size: 18px;
@@ -77,19 +84,21 @@
             border-radius: 5px;
             color: white;
             cursor: pointer;
+            width: 48%; /* Adjust width to fit buttons side by side */
         }
         .login-submit:hover {
             background-color: rgb(120, 180, 220);
         }
     </style>
 </head>
+<% request.setCharacterEncoding("UTF-8");%>
 <body class="login-submit-body">
     <div class="section-header-login">
         <img src="images/logo2.PNG" alt="Logo">
         <div>LOGIN</div>
     </div>
     <div class="login-submit-container">
-        <form action="ex_login_result.jsp" class="login-form" name=login>
+        <form action="ex_login_result.jsp" class="login-form" name="login">
             <div>
                 <label for="username" class="login-label">아이디</label>
                 <input type="text" id="username" name="userId" class="login-input">
@@ -98,15 +107,19 @@
                 <label for="password" class="login-label">비밀번호</label>
                 <input type="password" id="password" name="pwd" class="login-input">
             </div>
-            <input class="login-submit" type="button" value="로그인" onclick="fnLogin()">
+            <div class="login-button-container">
+                <input class="login-submit" type="button" value="로그인" onclick="fnLogin()">
+                <input class="login-submit" type="button" value="회원가입" onclick="fnRegist()">
+            </div>
         </form>
     </div>
 </body>
 </html>
- <script>
+
+<script>
     function fnLogin() {
         var form = document.login;
-         var id = form.userId.value;
+        var id = form.userId.value;
         var pwd = form.pwd.value;
 
         if (id === "") {
@@ -120,5 +133,9 @@
         } else {
             form.submit();
         }
+    }
+
+    function fnRegist() {
+        location.href="ex_regist.jsp"
     }
 </script>
