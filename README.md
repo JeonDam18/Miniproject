@@ -1,10 +1,10 @@
-# 전담의 Miniproject
+# Dam Jeon's Miniproject
 
-## 💿프로젝트 소개
+## 💿Project Introduction
 
-+ 사용자간 언어교환 시스템을 매칭해주는 페이지로 기본적인 로그인,회원가입,게시판의 CRUD를 구현하였습니다.
++ This is a platform that matches users for language exchange. It includes essential features such as login, registration, and a bulletin board with full CRUD functionality.
 
-## 📆개발 기간
+## 📆Development Period
 
 + 2024.08.12 ~ 2024.08.20
 
@@ -22,26 +22,25 @@
 ![Eclipse](https://img.shields.io/badge/Eclipse-FE7A16.svg?style=for-the-badge&logo=Eclipse&logoColor=white)
 ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-0078d7.svg?style=for-the-badge&logo=visual-studio-code&logoColor=white)
 
-## 📈구현 과정
+## 📈Implementation Process
 
-1. 아이디어 구상
-  + 언어에대한 관심이 있던중 언어교환 시스템을 구현해봐야 겠다고 생각함
-  + 실질적인 매칭들은 게시글에 의해 구현이 되어 신뢰도가 떨어져 기본적인 사용자들간의 정보를 노출(SELFIE,자기소개,선호하는 시간 ETC..) 회원들의 정보가 노출되어있기 때문에 회원들만 MAIN페이지 접속가능
+1. Idea Planning
+  + I developed an interest in languages and decided to create a language exchange system.
+  + The actual matching was initially implemented through bulletin board posts, which reduced reliability. To improve this, basic user information such as profile pictures, self-introductions, and preferred study times is displayed. Since member information is publicly visible, only registered users can access the main page.
 
+2. DB design
+  + User table for user registration (attachments are read from the path)
+  + Table for posts
+  + Table for matching users (a table that matches the applicant and the person who receives the application)
+  + Table for F&Q
 
-2. DB설계
-  + 회원가입을 위한 사용자 테이블(첨부파일은 경로로 읽어온다)
-  + 게시물을 위한 테이블
-  + 사용자들간의 매칭을 위한 테이블(신청한 사람과 신청받은 사람의 매칭된 테이블)
-  + F&Q를 위한 테이블
-
-3. HTML/CSS구현
-  + jsp 구현 전에 VScode를 이용하여 전반적인 UI를 구현한다(버튼,페이지 이동등 간단한 기능포함)
+3. HTML/CSS Implementation
+  + Before implementing the JSP, use VS Code to create the overall UI (including simple functions such as buttons, page transitions, etc.)
 
     
-4. 기능구현
- + 구현된 HTML페이지들을 Eclipse에서 tomcat서버를 이용하여 jsp파일로 변환하여 DB데이터 조회 및 수정 삭제
- + 예외처리(중복확인,빈값처리,길이제한,권한처리(수정,삭제,작성) etc...)
+4. Function Implementation
+ + Convert the implemented HTML pages into JSP files using Tomcat server in Eclipse for DB data retrieval, modification, and deletion
+ + Exception handling (duplicate check, empty value handling, length restrictions, permission handling (modify, delete, write), etc.)
 
 
 ## 🔎Page detail
